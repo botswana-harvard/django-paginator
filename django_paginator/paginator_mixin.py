@@ -2,13 +2,13 @@ import json
 
 from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage
-from django.shortcuts import render_to_response
+from django.template.loader import render_to_string
 
 
 class PaginatorMixin:
 
     paginate_by = 10
-    paginator_template = 'django_paginator/pager.html'
+    paginator_template = 'django_paginator/paginator_row.html'
 
     def paginate_queryset(self, qs, page_number):
         """Returns a Paginator page object given a queryset and page number."""
@@ -24,7 +24,7 @@ class PaginatorMixin:
         data = {}
         page_data = {k: v for k, v in page.paginator.__dict__.items() if k != 'object_list'}
         page_data.update({'number': page.number})
-        paginator_row = render_to_response(self.paginator_template, context=page_data)
+        paginator_row = render_to_string(self.paginator_template, context=page_data)
         data.update({'paginator_row': paginator_row})
         data.update({'paginator': json.dumps(page_data)})
         data.update({'object_list': serializers.serialize('json', page.object_list)})

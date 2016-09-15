@@ -1,9 +1,23 @@
 
 function updatePaginatorRow( paginator, paginator_row ) {
 
-	$( 'paginator-row').html( paginator_row );
-	$( 'paginator-row').addClass( 'text-center' ); 
+	/* 
+	 * Note: below calls YOUR function `getPaginatorPage` which do a call
+	 *       back to the view to get the firs, previous, next or last page of the queryset
+	 *        based on the page number.
+	 */
+	
+	// insert paginator row html
+	$( '#paginator-row').html( paginator_row );
+
+	// center the paginator
+	$( '#paginator-row').addClass( 'text-center' ); 
+
+	// insert the Page x or x text
 	$( '#spn-pager-pages' ).text( 'Page ' + paginator.number + '/' + paginator.num_pages );
+
+	// determine which controls should be enabled based on the 
+	// page number and number of pages, etc
 	if (paginator.num_pages === 1 ) {
 		$( '#btn-pager-next').prop( 'disabled', true); 
 		$( '#btn-pager-last').prop( 'disabled', true );
@@ -18,11 +32,11 @@ function updatePaginatorRow( paginator, paginator_row ) {
 			$( '#btn-pager-last').prop( 'disabled', false );
 			$( '#btn-pager-next').click( function ( e ) {
 				e.preventDefault();
-				getSubjects( paginator.number + 1 );
+				getPaginatorPage( paginator.number + 1 );
 			});
 			$( '#btn-pager-last').click( function ( e ) {
 				e.preventDefault();
-				getSubjects( paginator.count );
+				getPaginatorPage( paginator.count );
 			});
 		};
 		if (paginator.number === 1 ) {
@@ -33,11 +47,11 @@ function updatePaginatorRow( paginator, paginator_row ) {
 			$( '#btn-pager-previous').prop( 'disabled', false ); 
 			$( '#btn-pager-previous').click( function ( e ) {
 				e.preventDefault();
-				getSubjects( paginator.number - 1 );
+				getPaginatorPage( paginator.number - 1 );
 			});
 			$( '#btn-pager-first').click( function ( e ) {
 				e.preventDefault();
-				getSubjects( 1 );
+				getPaginatorPage( 1 );
 			});
 		};
 	};

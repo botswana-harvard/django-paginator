@@ -8,6 +8,10 @@ Install:
 
     pip install git+https://github.com/botswana-harvard/django-paginator@develop#egg=django-paginator
 
+Add to settings.INSTALLED_APPS:
+
+    'django_paginator.apps.AppConfig'
+
 Import the javascript file into your template:
 
     <script type="text/javascript" charset="utf8" src="{% static "django_paginator/js/django_paginator.js" %}"></script>
@@ -51,8 +55,7 @@ For example:
 To update the `paginator_row`, call `updatePaginatorRow` in the AJAX.done:
 
     updatePaginatorRow( paginator, paginator_row );
-
-
+ 
 For example, your AJAX call might look like this (Note both `object_list` and `paginator` are parsed):
 
     function getSubjects( page_number ) {
@@ -84,4 +87,17 @@ For example, your AJAX call might look like this (Note both `object_list` and `p
     }
 
 We are reversing urls with `django_js_reverse`.
+
+Lastly, `updatePaginatorRow` needs a function that will return the previous/next page of the queryset for the row buttons `click` events. The click event function is expected to be named `getPaginatorPage`. If you don't want to use that name just wrap your function:
+
+    function getPaginatorPage( page_number ) {
+        // wrapper for django_paginator row button click events
+        return getSubjects( page_number );
+    }
+
+
+### Troubleshooting
+
+* `TemplateDoesNotExist: django_paginator/pager.html.` Check INSTALLED_APPS.
+
 
