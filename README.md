@@ -30,7 +30,7 @@ And return the json_data to your AJAX call:
 
     return HttpResponse(json_data, content_type='application/json')
     
-For example:
+For example, if you are displaying a table of most recent records from model `Subject`:
 
     class MostRecentView(PaginatorMixin, View):
     
@@ -44,8 +44,7 @@ For example:
     
         def get(self, request, *args, **kwargs):
             if request.is_ajax():
-                model = django_apps.get_model(*app_config.most_recent_models['subject'].split('.'))
-                qs = model.objects.all().order_by('-created')
+                qs = Subject.objects.all().order_by('-created')
                 json_data = self.paginate_to_json(qs, self.kwargs.get('page', 1))
                 return HttpResponse(json_data, content_type='application/json')
             return None
@@ -95,9 +94,15 @@ Lastly, `updatePaginatorRow` needs a function that will return the previous/next
         return getSubjects( page_number );
     }
 
+#### urls.py
+
+To complete the example, add some urls
+
+    url(r'^recent/(?P<model>[\w]+)/(?P<page>[\d]+)/', MostRecentView.as_view(), name='most-recent'),
+    url(r'^recent/(?P<model>[\w]+)/', MostRecentView.as_view(), name='most-recent'),
 
 ### Troubleshooting
 
-* `TemplateDoesNotExist: django_paginator/pager.html.` Check INSTALLED_APPS.
+* `TemplateDoesNotExist: django_paginator/pager.html.` Check you added `django_paginator` to INSTALLED_APPS.
 
 
