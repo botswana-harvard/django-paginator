@@ -55,13 +55,13 @@ To update the `paginator_row`, call `updatePaginatorRow` in the AJAX.done:
 
     updatePaginatorRow( paginator, paginator_row );
  
-For example, your AJAX call might look like this (Note both `object_list` and `paginator` are parsed, `paginator_row` is not):
+For example, your AJAX call might look like this (Note both `object_list` and `paginator` are parsed, `paginator_row` is not). Still keeping to the example above: 
 
     function getSubjects( page_number ) {
     
-        // Gets a paginated queryset of "somethings" and adds each row to the table.
+        // Gets a paginated queryset of model "Subject" and adds each row to the table.
         var ajCall = $.ajax({
-            url: Urls['some_namespace:some_named_url']( page_number ),
+            url: Urls['my-namespace:most-recent-view']( page_number ),  // see urls below, use a namepace if you can
             type: 'GET',
         });
     
@@ -108,5 +108,3 @@ To complete the example, add some urls
 ### Troubleshooting
 
 * `TemplateDoesNotExist: django_paginator/pager.html.` Check you added `django_paginator` to INSTALLED_APPS.
-
-
