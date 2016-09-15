@@ -55,7 +55,7 @@ To update the `paginator_row`, call `updatePaginatorRow` in the AJAX.done:
 
     updatePaginatorRow( paginator, paginator_row );
  
-For example, your AJAX call might look like this (Note both `object_list` and `paginator` are parsed):
+For example, your AJAX call might look like this (Note both `object_list` and `paginator` are parsed, `paginator_row` is not):
 
     function getSubjects( page_number ) {
     
@@ -67,11 +67,15 @@ For example, your AJAX call might look like this (Note both `object_list` and `p
     
         ajCall.done(function ( data ) {
 
+            // the "page" of the queryset
             var object_list = JSON.parse( data.object_list );
+            // the values that the django paginator added, number, num_pages, etc
             var paginator = JSON.parse( data.paginator );
+            // rendered html of the paginator row
             var paginator_row = data.paginator_row;
     
             // your function that handles the queryset
+            // and the table you are displaying
             updateMyTable( object_list );
     
             // django_paginator function to update paginator_row
