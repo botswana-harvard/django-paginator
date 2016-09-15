@@ -1,5 +1,8 @@
 
-function updatePaginatorRow( paginator ) {
+function updatePaginatorRow( paginator, paginator_row ) {
+
+	$( 'paginator-row').html( paginator_row );
+	$( 'paginator-row').addClass( 'text-center' ); 
 	$( '#spn-pager-pages' ).text( 'Page ' + paginator.number + '/' + paginator.num_pages );
 	if (paginator.num_pages === 1 ) {
 		$( '#btn-pager-next').prop( 'disabled', true); 
