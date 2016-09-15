@@ -48,7 +48,12 @@ For example:
     
 #### In the `js` file:
 
-Your AJAX call might look like this (Note both `object_list` and `paginator` are parsed):
+To update the `paginator_row`, call `updatePaginatorRow` in the AJAX.done:
+
+    updatePaginatorRow( paginator, paginator_row );
+
+
+For example, your AJAX call might look like this (Note both `object_list` and `paginator` are parsed):
 
     function getSubjects( page_number ) {
     
@@ -59,13 +64,15 @@ Your AJAX call might look like this (Note both `object_list` and `paginator` are
         });
     
         ajCall.done(function ( data ) {
-            // build rows with returned data and show the table
+
             var object_list = JSON.parse( data.object_list );
             var paginator = JSON.parse( data.paginator );
             var paginator_row = data.paginator_row;
     
+            // your function that handles the queryset
             updateMyTable( object_list );
     
+            // django_paginator function to update paginator_row
             updatePaginatorRow( paginator, paginator_row );
     
         });
