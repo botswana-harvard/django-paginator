@@ -1,0 +1,2 @@
+recursive-include django_paginator/templates *
+recursive-include django_paginator/static/django_paginator/ *
